@@ -191,6 +191,7 @@ void B() {
 }
 
 
+
 # 📦 Stack Memory Allocation in Java – Method Calls and Execution Flow
 
 This note explains how **stack memory** is allocated and managed during method calls in Java, using a simple example of two methods `A()` and `B()`.
@@ -210,5 +211,153 @@ void B() {
     int bx;
     int by;
 }
+```
+
+---
+
+## 🔍 Step-by-Step Stack Memory Allocation
+
+### 🧾 Initial State
+- Before any methods are invoked, the **stack is empty**.
+
+---
+
+### 🧾 Step 1: Calling Method `A()`
+- The JVM creates a **stack frame for `A()`**.
+- Stack frame contains:
+  - Local variables: `ax`, `ay`
+  - Return address
+
+📦 **Stack Memory:**
+```
++------------------------+
+| Stack Frame for A()    |
+|------------------------|
+| ax (int)               |
+| ay (int)               |
++------------------------+
+```
+
+---
+
+### 🧾 Step 2: Calling Method `B()` from `A()`
+- The JVM creates a **new stack frame for `B()`**, pushed **above** `A()`'s frame.
+- Stack frame contains:
+  - Local variables: `bx`, `by`
+  - Return address
+
+📦 **Stack Memory:**
+```
++------------------------+
+| Stack Frame for B()    |
+|------------------------|
+| bx (int)               |
+| by (int)               |
++------------------------+
+| Stack Frame for A()    |
+|------------------------|
+| ax (int)               |
+| ay (int)               |
++------------------------+
+```
+
+---
+
+### 🧾 Step 3: Returning from `B()` to `A()`
+- Method `B()` finishes execution.
+- The **stack frame for `B()` is removed**.
+- Execution returns to `A()`.
+
+📦 **Stack Memory:**
+```
++------------------------+
+| Stack Frame for A()    |
+|------------------------|
+| ax (int)               |
+| ay (int)               |
++------------------------+
+```
+
+---
+
+### 🧾 Step 4: Returning from `A()` (Final Cleanup)
+- Method `A()` finishes execution.
+- The **stack frame for `A()` is removed**.
+- Stack is now empty.
+
+📦 **Stack Memory:**
+```
+[empty]
+```
+
+---
+
+## 🧠 Key Concepts Recap
+
+- ✅ **Stack Frame**: Created for each method call and destroyed when the method returns.
+- ✅ **Local Variables**: Stored inside the method's stack frame.
+- ✅ **Program Counter (PC)**:
+  - Points to the current executing instruction.
+  - Keeps track of method call flow.
+- ✅ **LIFO Order**: Stack works in Last-In-First-Out — last method called is the first to return.
+
+---
+
+## 🔁 Visual Summary of Execution Flow
+
+### Before Any Method Call
+```
+[empty]
+```
+
+### After Calling `A()`
+```
++------------------------+
+| Stack Frame for A()    |
+|------------------------|
+| ax (int)               |
+| ay (int)               |
++------------------------+
+```
+
+### After `B()` Called from `A()`
+```
++------------------------+
+| Stack Frame for B()    |
+|------------------------|
+| bx (int)               |
+| by (int)               |
++------------------------+
+| Stack Frame for A()    |
+|------------------------|
+| ax (int)               |
+| ay (int)               |
++------------------------+
+```
+
+### After `B()` Returns
+```
++------------------------+
+| Stack Frame for A()    |
+|------------------------|
+| ax (int)               |
+| ay (int)               |
++------------------------+
+```
+
+### After `A()` Returns
+```
+[empty]
+```
+
+---
+
+## 📝 Summary
+
+- Each method call creates a new **stack frame**.
+- Local variables (`ax`, `ay`, `bx`, `by`) live only as long as their methods run.
+- Once a method returns, its stack frame is **automatically removed**.
+- The **Program Counter (PC)** keeps the execution in order, pointing to current instructions.
+
 
 
