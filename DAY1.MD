@@ -129,3 +129,65 @@ The Java Virtual Machine (JVM) uses different memory areas to manage and store d
 
 💡 **Tip**: Use tools like `VisualVM`, `JConsole`, or `JFR` to visualize memory usage and tune GC parameters with flags like `-Xmx`, `-Xms`, `-XX:+UseG1GC`.
 
+# 🧠 JVM Internals – Stack Memory & Program Counter (PC)
+
+---
+
+## 1️⃣ How Does Garbage Collection Clear Stack Memory?
+
+### 🔸 Short Answer:
+**It doesn’t.** Garbage Collection (GC) in Java **does not manage stack memory** — it only handles **heap memory**.
+
+### 📌 Stack Memory Management:
+- Stack memory is **automatically managed** by the JVM using a **call stack**.
+- Every time a method is invoked, the JVM creates a **stack frame**:
+  - Local variables (primitives + object references)
+  - Method parameters
+  - Return address
+- When the method completes, its stack frame is **popped off** the stack and memory is reclaimed.
+
+### 🔄 LIFO Structure:
+- Stack operates on **Last In, First Out (LIFO)**.
+- Most recent method call finishes first, and its memory is cleared automatically.
+  
+### 🚫 No Garbage Collection Needed:
+- Stack memory is **ephemeral** — created and destroyed per method call.
+- No memory leak risk like in heap memory.
+- JVM handles stack frame cleanup on its own, **no GC required**.
+
+---
+
+## 2️⃣ What is the Program Counter (PC)?
+
+### 🧭 Definition:
+The **Program Counter (PC)** is a **per-thread register** in the JVM that stores the **address of the current or next bytecode instruction** to be executed.
+
+### 🔸 Role of PC:
+- Tracks execution **instruction by instruction**.
+- Maintains the position of:
+  - **Method entry points**
+  - **Return addresses**
+  - **Next instruction** after method calls
+
+### 🔄 Thread-Specific:
+- Every thread has its own PC register.
+- Allows **concurrent thread execution** with independent code paths.
+
+---
+
+## ⚙️ PC Behavior in Action:
+
+### 🔁 Method Invocation Example:
+```java
+void A() {
+    int ax = 1;
+    int ay = 2;
+    B();
+}
+
+void B() {
+    int bx = 3;
+    int by = 4;
+}
+
+
