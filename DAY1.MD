@@ -191,3 +191,24 @@ void B() {
 }
 
 
+# 📦 Stack Memory Allocation in Java – Method Calls and Execution Flow
+
+This note explains how **stack memory** is allocated and managed during method calls in Java, using a simple example of two methods `A()` and `B()`.
+
+---
+
+## 🧪 Example Code
+
+```java
+void A() {
+    int ax;
+    int ay;
+    B();
+}
+
+void B() {
+    int bx;
+    int by;
+}
+
+
