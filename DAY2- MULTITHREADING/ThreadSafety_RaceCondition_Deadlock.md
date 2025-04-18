@@ -31,6 +31,8 @@ public void increment() {
 ```
 - **Pros**: More control, supports tryLock.
 - **Cons**: Requires more code, needs careful handling.
+![ChatGPT Image Apr 18, 2025, 09_54_52 PM](https://github.com/user-attachments/assets/78980122-9969-47cb-82f3-bdcb016a2c1b)
+
 
 #### 3. Atomic Classes
 ```java
