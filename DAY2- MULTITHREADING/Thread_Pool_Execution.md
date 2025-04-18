@@ -21,8 +21,9 @@ public class MainThreadExample {
     }
 }
 ```
-ChatGPT Image Apr 18, 2025, 09_54_52 PM.png
+
 - The main thread will print each line in order, sequentially.
+![ChatGPT Image Apr 18, 2025, 09_54_52 PM](https://github.com/user-attachments/assets/9d745d64-79b8-4d26-8f9d-95abebed6ec7)
 
 ---
 
