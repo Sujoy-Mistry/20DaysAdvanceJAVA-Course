@@ -166,6 +166,7 @@ const b = 4;
 Both are interchangeable. This ensures **predictability** and makes refactoring safe.
 
 ---
+![ChatGPT Image Apr 20, 2025, 12_33_24 AM](https://github.com/user-attachments/assets/98580360-8109-43cb-81d5-aba4503bc514)
 
 ## 📘 Summary Table
 
@@ -182,7 +183,3 @@ Both are interchangeable. This ensures **predictability** and makes refactoring 
 
 ---
 
-Let me know if you'd like:
-- A visual timeline showing FP vs OOP styles
-- Code examples in Java or Python
-- Real-world problems solved using functional patterns
