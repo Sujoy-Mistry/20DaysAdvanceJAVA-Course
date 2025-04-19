@@ -138,3 +138,6 @@ Let me know if you want:
 - A multi-phase simulation example
 - A diagram to visualize the barrier mechanism
 - A comparison with `CountDownLatch` or `Phaser`
+
+  ![ChatGPT Image Apr 19, 2025, 11_03_05 PM](https://github.com/user-attachments/assets/d2d32193-0114-4a48-9016-af8224687a88)
+
