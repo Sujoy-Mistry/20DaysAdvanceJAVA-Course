@@ -78,6 +78,9 @@ The ForkJoinPool uses a **work-stealing algorithm**:
 
 ---
 
+![A_digital_illustration_diagrammatically_illustrate](https://github.com/user-attachments/assets/24ef6a2a-3768-4d78-b246-5675a7d97a9a)
+
+
 ## 📈 When to Use ForkJoinPool?
 
 ForkJoinPool is ideal for **divide-and-conquer** style problems, where:
