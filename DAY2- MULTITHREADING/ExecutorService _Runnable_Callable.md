@@ -181,5 +181,6 @@ System.out.println(future.get()); // Blocks and prints the returned string
 ```java
 Future<?> f = executor.submit(Runnable task, T result);
 ```
+![ChatGPT Image Apr 19, 2025, 05_06_40 PM](https://github.com/user-attachments/assets/53829ee4-d9e2-474f-86e0-34194622a756)
 
 
