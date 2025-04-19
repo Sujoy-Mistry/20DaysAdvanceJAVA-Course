@@ -140,3 +140,81 @@ CompletableFuture.supplyAsync(() -> "Custom", executor)
 | Exception handling     | Built-in handling with `handle()` etc.        |
 | Parallel execution     | Combine multiple async tasks easily           |
 | Optional custom threads| Control over performance and resources        |
+
+
+
+
+# 🔍 What Happens When `supplyAsync()` Takes Too Long?
+
+## 📘 Code Example:
+```java
+CompletableFuture.supplyAsync(() -> {
+    // Simulate long computation
+    Thread.sleep(5000);
+    return "Hello";
+}).thenApply(result -> {
+    return result + " World";
+}).thenAccept(System.out::println);
+```
+
+## 🧠 Key Concepts:
+- `supplyAsync()` **runs in a separate thread** (usually from the **ForkJoinPool.commonPool** unless you specify an executor).
+- The **main thread** or calling thread **does NOT block or wait** for it.
+- If `supplyAsync()` takes 5 seconds, it **runs in the background** for 5 seconds.
+- Meanwhile, the **main thread can continue doing other work**.
+
+---
+
+## ✅ So Yes — While `supplyAsync()` is Running:
+
+- The **main thread is free** to do other tasks.
+- Other threads in the pool are also free to do other work.
+- Only the thread **actually running that task** is occupied until it completes.
+- The next stages (`thenApply`, `thenAccept`, etc.) will **wait** for the result, but they **won’t block the main thread**—they get triggered **once** the async result is ready.
+
+---
+
+## 🧵 Visual Timeline:
+
+```
+Main Thread         ForkJoin Thread
+------------        -----------------------
+Start               supplyAsync() starts
+                    (sleep 5 sec)
+
+Main Thread does other stuff...
+
+(wait...)           task completes -> "Hello"
+                    thenApply runs -> "Hello World"
+                    thenAccept prints "Hello World"
+```
+
+---
+
+## ⚠️ Important Note:
+If you **block the main thread** using `get()` or `join()` like:
+
+```java
+String result = CompletableFuture.supplyAsync(() -> {
+    Thread.sleep(5000);
+    return "Hello";
+}).join();  // Blocks here!
+System.out.println(result);
+```
+
+Then **yes**, your thread will wait and do nothing until the result is ready. So to stay non-blocking, **avoid `join()` or `get()` unless absolutely necessary**.
+
+---
+
+## ✅ TL;DR
+
+| Question                              | Answer                                       |
+|---------------------------------------|----------------------------------------------|
+| Will the thread keep working if `supplyAsync()` takes time? | ✅ Yes, **other threads** (incl. main) continue |
+| Is the call blocking?                 | ❌ No, unless you explicitly call `get()` or `join()` |
+| Who waits for the result?             | 🔄 Only the **async chain**, not the main thread |
+
+---
+
+Let me know if you'd like a visual diagram of the timeline in markdown or image form!
+
